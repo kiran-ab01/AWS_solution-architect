@@ -17,6 +17,14 @@ open elastic ip ->action-> associate elastic ip address->select instance.
 to create placemnt group-> network & security->placment group-> create placment group->name->select placmnet strategy->select sprade level->and create 
 while creating new instance in advance setting.
 
+# EC2 Hibernate
+while creating an instance in advance setting we can enable hibernate behaviour->ebs volume must be encrypte.
+uptime-> we can get the information about how many mints inntance is up in cmd.
+if we add hibernate to the instance and start and stop the instance it will calculate the instance time by adding all.
+
+# 
+
+
 
 
 
