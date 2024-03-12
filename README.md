@@ -22,7 +22,12 @@ while creating an instance in advance setting we can enable hibernate behaviour-
 uptime-> we can get the information about how many mints inntance is up in cmd.
 if we add hibernate to the instance and start and stop the instance it will calculate the instance time by adding all.
 
-# 
+# LB sticky 
+if we enable the elastic load balance for a user it will navigate to the particular user to particlar instance.
+# elastic load balancer -SSL certificate
+ssl(secured socket layer: used to encrypt connections) certification allows trafic between your clients and load balancer to be encrypted.
+TLS(transport layer security). public ssl certificate is issued by certificate authority and this sslis attched to load balancer to encrypt connection between client and load balancer.
+SSl certificate have expiry date you set and we need to renewed.
 
 
 
