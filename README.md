@@ -28,6 +28,10 @@ if we enable the elastic load balance for a user it will navigate to the particu
 ssl(secured socket layer: used to encrypt connections) certification allows trafic between your clients and load balancer to be encrypted.
 TLS(transport layer security). public ssl certificate is issued by certificate authority and this sslis attched to load balancer to encrypt connection between client and load balancer.
 SSl certificate have expiry date you set and we need to renewed.
+SNI(server name indication):sni solve the problm of loading multiple ssl certificates.works only for ALB & NLB.
+How to enable SSl certificate:select load balancer->add listner->under security listner setting-> select security policy->select where this certificates are resids(we can also import the certificates)-> and done.
+
+
 
 
 
