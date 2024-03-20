@@ -31,6 +31,30 @@ SSl certificate have expiry date you set and we need to renewed.
 SNI(server name indication):sni solve the problm of loading multiple ssl certificates.works only for ALB & NLB.
 How to enable SSl certificate:select load balancer->add listner->under security listner setting-> select security policy->select where this certificates are resids(we can also import the certificates)-> and done.
 
+# AWS s3
+if we upload same object/image file with same name and if we desabled the version it will override the existing one.
+objects in Amazon S3 are private by default.
+
+# Ec2 instance connect
+Session Manager enables you to connect to the bastion host instance without the need for specific ports to be open on your firewall or Amazon Virtual Private Cloud (Amazon VPC) security group
+command to list all of your S3 buckets: aws s3 ls
+command to list all objects in your buckets: aws s3 ls s3://<bucketname>
+copy a file to the S3 bucket: aws s3 cp report-test1.txt s3://<bucketname>
+**error**:upload failed. This is because we have read-only rights to the bucket and do not have the permissions to perform the PutObject operation we need to chenge bucket policy.
+EC2InstanceProfileRole: This is the Role that the EC2 instance uses to connect to S3, note arn for future use.
+so in the bucket policy allow this role to get and put objects, so that we can add objects to s3 bucket through ec2 connect.
+A blank Bucket policy editor is displayed. Bucket policies can be created manually, or they can be created with the assistance of the AWS Policy generator: https://awspolicygen.s3.amazonaws.com/policygen.html.
+Principal: paste the EC2InstanceProfileRole ARN that you copied to a text file
+An Amazon Resource Name (ARN) is a standard way to refer to resources within AWS. In this case, the ARN is referring to your S3 bucket. Adding /*.
+In order to access a previous version of the object, you need to update your bucket policy to include the “s3:GetObjectVersion” permission. 
+
+# aws versioning
+versiion will take a files with the same name and also used if we have any accidental delete of the objects.
+Notice that the sample-file.txt object is displayed again, but the most recent version is a Delete marker. parmanently delete version of the sample-file.txt object with the Delete marker it will recover our files back.
+Note:  When deleting a specific version of an object no delete marker is created
+
+
+
 
 
 
