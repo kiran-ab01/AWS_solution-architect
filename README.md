@@ -54,6 +54,10 @@ Notice that the sample-file.txt object is displayed again, but the most recent v
 Note:  When deleting a specific version of an object no delete marker is created
 
 
+Connect to database using end point,
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/74e99a11-0187-4617-80c7-d73132692f33)
+
+
 
 
 
