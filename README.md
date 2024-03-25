@@ -57,8 +57,59 @@ Note:  When deleting a specific version of an object no delete marker is created
 Connect to database using end point,
 ![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/74e99a11-0187-4617-80c7-d73132692f33)
 
+# Amazon Virtual Private Cloud (VPC)
+ Your VPCs->Create VPC->VPC Only-> give tag name->IPv4 CIDR block: 10.0.0.0/16-> create vpc.
+# Create Your Public Subnet
+Subnets->VPC ID: My VPC->Subnet name->Availability Zone->IPv4 subnet CIDR block->Create subnet->then select created subnet->action->edit subnet setting->Enable auto-assign public IPv4 address.
+Enable auto-assign public IPv4 address provides a public IPv4 address for all instances launched into the selected subnet.
+Even though your subnet is labeled Public 1, it is not yet a public subnet. A public subnet must have an Internet Gateway, 
+#  Create an Internet Gateway
+Internet gateways->Create internet gateway->select created IG ->actions->Attach to VPC->Attach internet gateway.
+This attaches the Internet gateway to your VPC. Even though you created an Internet gateway and attached it to your VPC, you still have to tell instances within your public subnet how to get to the Internet.
+# Create a Route Table, Add Routes, And Associate Public Subnets
+To use an Internet gateway, your subnet’s route table must contain a route that directs Internet-bound traffic to the Internet gateway. You can scope the route to all destinations not explicitly known to the route table (0.0.0.0/0 for IPv4 or ::/0 for IPv6), or you can scope the route to a narrower range of IP addresses; for example, the public IPv4 addresses of your company’s public endpoints outside of AWS, or the Elastic IP addresses of other Amazon EC2 instances outside your VPC. If your subnet is associated with a route table that has a route to an Internet gateway, it’s known as a public subnet.
+There is currently one default route table associated with the VPC, My VPC. This routes traffic locally. Create an additional Route Table to route public traffic to your Internet Gateway.
 
+Route tables->Create route table->Under Route table settings->VPC select vpc->create.
 
+Notice that there is one route in your route table that allows traffic within the 10.0.0.0/16 network to flow within the network, but it does not route traffic outside of the network. Add a new route to enable public traffic
+Edit routes->Add route->Destination:0.0.0.0/0->Target: Select Internet Gateway->save.
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/b97408c9-9058-41df-b31f-59aceada699c)
+Choose the Subnet associations->Edit subnet associations->select publick subnet->save
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/f11ee665-6afc-46ca-a41e-0d2a8431c7f1)
+The subnet is now public because it is connected to the Internet via the Internet Gateway.
+
+# Create a Security Group
+A security group acts as a virtual firewall for your instance to control inbound and outbound traffic. When you launch an instance in a VPC, you can assign up to five security groups to the instance. Security groups act at the instance level, not the subnet level. Therefore, each instance in a subnet in your VPC could be assigned to a different set of security groups. If you do not specify a particular group at launch time, the instance is automatically assigned to the default security group for the VPC.
+Security groups->Security group name->Description->VPC->Under Inbound rules->Add rule->Type: HTTP->Source: Anywhere-Ipv4->Create security group.
+
+# Launch a Web Server in your Public Subnet
+AWS Management Console->EC2->Launch instances->Name and tags section give name->Application and OS Images (Amazon Machine Image) Choose Amazon Linux 2 AMI->Key pair (login)->Proceed without a key pair->Network settings->edit->select vpc->Firewall (security groups), choose  Select an existing security group-> Advanced Details->User data-> add some of the pre request file install->Copy the Public IPv4 address ->search in new tab->you need to see as below,
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/72c4b56a-6f61-483c-bac1-b0253382e02b)
+You should be able to see this page. Currently, you do not have a database. Once you create your RDS instance, you connect it to your web server.
+# Create Private Subnets for your MySQL Server
+To deploy your RDS database, your VPC must have at least two subnets. These subnets must be in two different Availability Zones in the AWS Region where you want to deploy your DB instance.
+AWS Management Console->VPC->Create subnet->select vpc->give subnet name->select AZ and give-> IPv4 CIDR block->save
+1.Create a Security Group for your Database Server
+2.Create a Database Subnet Group
+ A DB subnet group is a collection of subnets (typically private) that you create in a VPC and that you then designate for your DB instances. Each DB subnet group should have subnets in at least two Availability Zones in a given region. When creating a DB instance in a VPC, you must select a DB subnet group.
+ AWS Management Console ->RDS->Subnet groups->Create DB Subnet Group->Name->VPc->Add subnets section->select Availability zones->In the Subnets->select ip.save.
+# Create an Amazon RDS Database
+ Databases->Create database->Engine options: MySQL->Version: MySQL 5.7.X->Templates section, select Dev/Test->Settings section->DB instance identifier:->Master username: ->Master password: ->DB instance class section->DB instance class: Burstable classes->Select db.t2.micro or db.t3.micro->Storage section->Storage section, de-select  Enable storage autoscaling->Connectivity section->Virtual Private Cloud (VPC)->Public access: No->Existing VPC security groups->Add the Database security group->Monitoring section, de-select  Enable Enhanced monitoring->Additional configuration->De-select  Enable automated backups,De-select  Enable auto minor version upgrade->create.
+ # Connect Your Address Book Application to Your Database
+ you connect the address book application (in your Public subnet) to your database (in your Private subnet).
+ Before you can connect your address book application to your database, you need to know the endpoint of the RDS instance. This is the address of your RDS instance
+ mydb instance->Connectivity & security->Endpoint(copy).
+
+ # CONNECT TO YOUR DATABASE
+Return to the browser tab that is displaying your web server
+Endpoint: Paste your MySQL endpoint
+Database: myDB
+Username: admin
+Password: lab-password
+Choose Submit
+Once connected, you should see an address book with two entries.
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/7cfb5e08-b06d-4f35-99a7-8d415c479c3f)
 
 
 
