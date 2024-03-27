@@ -111,6 +111,45 @@ Choose Submit
 Once connected, you should see an address book with two entries.
 ![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/7cfb5e08-b06d-4f35-99a7-8d415c479c3f)
 
+The only architectural difference between a public and private subnet is that a public subnet has a route to an internet gateway.
+hirarchy:- aws cloud->region-> vpc->subnet->(route table we can manage the traffic)-network ACLS(access control list)->security group-> ec2 isnatnce.
+
+
+# Elastic Load Balancing
+All AWS load balancers are scalable and highly available. The Application Load Balancer has individual nodes running in each Availability Zone that are configured with the Application Load Balancer. Application Load Balancers can be internet-facing or internal; the difference is that internet facing Application Load Balancers will have public IP addresses and internal Application Load Balancers will have private IP addresses.
+The Classic Load Balancer, the Application Load Balancer, the Network Load Balancer, and the Gateway Load Balancer, these services make up the family of products known as Elastic Load Balancing (ELB).
+Network Load Balancers can allocate static IP addresses, they are easier to integrate with security and firewall products. 
+
+
+
+# Deploying Amazon VPC for a 3-Tier Web App
+1.Creating a VPC
+(to create vpc we need to give vpc name and cidr ipv4 ip range)
+2.Creating subnets
+create 2 public and 4 public subnets(to create subnets we need to VPC ID,Subnet name,Availability Zone,IPv4 CIDR block)
+3.Creating an Internet gateway
+(to create IG  required only name and after creation we need to attached to vpc)
+4.Creating a NAT gateway
+You can use a network address translation (NAT) gateway to enable instances in a private subnet to connect to the internet or other AWS services. The NAT gateway also prevents the internet from initiating a connection with those instances
+( to create NAt gateway we need name,subnet,Connectivity type,Elastic IP allocation ID)
+if we Choose Allocate Elastic IP->This will generate an Elastic IP address and will allocate it to the NAT gateway.
+5.Configuring route tables
+(2 route table one if for private subnet and one is for publick subnet)
+6.Creating security groups
+(Security group name,VPC,Inbound rules)
+7.CREATE THE DATABASE subnet IN THE PRIVATE SUBNETS
+Create DB subnet group-to rds will be deploye(name,description,vpc,AZ,subnets)
+8.Create database
+(Choose a database creation method,Engine type,Available version,Templates,DB cluster identifier,Master username,Master password,DB instance class,size,Availability & durability,)
+9.create EC2 instance
+If you want the application to be highly available in different Availability Zones, it’s a good practice to create a launch template and reuse it for deploying the EC2 instance instead of creating from scratch every time.
+create templete and make use of that templet to create mutiple ec2 instance.
+10.CREATE AN APPLICATION LOAD BALANCER
+(Load balancer name,Network mapping,VPC,Security Groups,Listeners and routing,Target group,Register Targets)
+
+
+
+
 
 
 
