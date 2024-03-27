@@ -147,7 +147,7 @@ create templete and make use of that templet to create mutiple ec2 instance.
 10.CREATE AN APPLICATION LOAD BALANCER
 (Load balancer name,Network mapping,VPC,Security Groups,Listeners and routing,Target group,Register Targets)
 
-
+k
 
 
 
