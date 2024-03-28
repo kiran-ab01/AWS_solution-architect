@@ -156,6 +156,35 @@ create templete and make use of that templet to create mutiple ec2 instance.
 10.CREATE AN APPLICATION LOAD BALANCER
 (Load balancer name,Network mapping,VPC,Security Groups,Listeners and routing,Target group,Register Targets)
 
+# Gateways in AWS
+1.Internet gateway
+
+Internet getway is VPC level
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/dbf6ce1e-4549-4af7-b869-32f4051f1fde)
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/0bad3fdf-a548-44b8-9394-6b5a14946fc9)
+
+2. NAT gateway
+3. 
+Nat gateway is subnet level
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/c0c75c97-6c9a-4548-837d-507f9ff99129)
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/43cabdc3-b3ba-48b0-a11b-ee9fe43ef418)
+
+4. VPC peering
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/e4af1800-51dc-4f02-90f3-50ec0ef7c8bf)
+
+4.virtual private getway
+
+by defult any resource created inside the vpc is don't have any cpmmunication to on-promis datacenter/any other, so we need to establish a connection we can make use of virtual private gateway.
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/848fffe7-e346-4f99-a748-a51d79ff6d58)
+we can add multiple connection to vpc through virtual private getway up to 10(on primis/application) connection and only one virtual private getway in vpc.
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/224c64b7-1919-4e5e-b63c-0d16ddc40ff0)
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/ae980131-439c-4593-87f2-c81c2934172e)
+alternative way is make use of public&private virtual interfaces to connect as mentiond above
+
+5.customer getway
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/2d6e85fd-2159-4eed-89b8-4165801744a1)
+
+6.Direct connect getway
 
 
 
