@@ -164,15 +164,15 @@ Internet getway is VPC level
 ![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/0bad3fdf-a548-44b8-9394-6b5a14946fc9)
 
 2. NAT gateway
-3. 
+
 Nat gateway is subnet level
 ![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/c0c75c97-6c9a-4548-837d-507f9ff99129)
 ![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/43cabdc3-b3ba-48b0-a11b-ee9fe43ef418)
 
-4. VPC peering
+ VPC peering
 ![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/e4af1800-51dc-4f02-90f3-50ec0ef7c8bf)
 
-4.virtual private getway
+3.virtual private getway
 
 by defult any resource created inside the vpc is don't have any cpmmunication to on-promis datacenter/any other, so we need to establish a connection we can make use of virtual private gateway.
 ![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/848fffe7-e346-4f99-a748-a51d79ff6d58)
@@ -181,10 +181,94 @@ we can add multiple connection to vpc through virtual private getway up to 10(on
 ![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/ae980131-439c-4593-87f2-c81c2934172e)
 alternative way is make use of public&private virtual interfaces to connect as mentiond above
 
-5.customer getway
+4.customer getway
 ![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/2d6e85fd-2159-4eed-89b8-4165801744a1)
 
-6.Direct connect getway
+5.Direct connect getway
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/02b7fb20-1d2e-4ed8-ac5c-aa6d786327a5)
+Mainly used to connect mutiple aws account in diff region.
+
+we can't make use direct connect getway to connect 2 vpc in the 2 diff aws account.
+
+6.Transit gateway
+
+by make use of transit getway we can connect one vpc to other vpc but we can't communicate if the connection is not there.
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/f0e10441-ccd8-4b95-98e6-04ec21b729ab)
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/a268acbe-f515-41d6-af20-144e2f2ad95e)
+we can have 20 route table defined in the subnet
+
+7.Local getways
+
+vlan
+
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/acf3db48-9e4b-4438-9503-f2ac66bb4a85)
+
+# Virtual Private Cloud (VPC) peering and AWS Transit Gateway
+1.CONFIGURE A VPC PEERING CONNECTION BETWEEN VPC1 (OREGON REGION) AND VPC2 (OREGON REGION)
+
+to create vpc peering->vpc->create peering connection->name of the peering->vpc id(requestor)->select my account->region-this region -if vpc is in another region select that region vpc->vpc id(accepter).->accept the peearing connect. create mesh vpc peering from one vpc to other.
+
+Task 2: Configure network traffic routing across a VPC peering connection
+
+Amazon VPC provides multiple ways to route VPC traffic. In this lab, you use a Custom route table, which is a route table that you create
+
+CONFIGURE ROUTING IN each VPCs
+
+In the custom routetable we can add Nat gateway/internet getway to internet access and also we need to add routs to peering connection on that particular vpc.
+
+Destination- 10.20.0.0/16 (This ip is vpc2 CIDR, add here to enable vpc3 private subnet to reach it- through the VPC peering connection).Target- select Peering Connection from the drop-down list.Choose vpc3-vpc2-peering->add
+
+Task 3: Test network connectivity across VPC peering connections
+
+This lab uses AWS Systems Manager to give you access to the EC2 instances through an interactive one-click browser-based shell. This service helps customers manage EC2 instances without the need to open inbound ports like SSH, maintain bastion hosts, or manage SSH keys.
+
+select ec2 instance->connect->sestion manger->it will login to backend of ec2
+
+To test the vpc connection select another ec2 instance and copy the ip address and use ping <isnstance_ip> to check the connection
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/f1c9b7d5-a79e-4aa7-a0a3-631b4a505b63)
+
+Task 5: Remove VPC peering connections
+
+Task 6: Setup AWS Transit Gateway connections
+
+In the VPC peering scenario tasks (Task 1 - Task 5), a full-mesh configuration was required to allow communication between the three VPCs. Which ended up with three VPC peering connections. With AWS Transit Gateway, you can share a Transit Gateway resource with VPCs in the same region. Hence the end configuration uses two Transit Gateway resources instead of three
+
+CREATE A TRANSIT GATEWAY IN EACH REGION
+
+Transit Gateways->name->Amazon side Autonomous System Number (ASN): 64513 (you can choose any range between 64512 - 65534. We recommend using a unique ASN ->Default route table association: Uncheck->Default route table propagation: Uncheck-> create.
+create required transit getway currently i need 2 getway
+
+Task 7: Configure AWS Transit Gateway Attachments
+
+The VPC attachment enables the transit gateway to route packets to and from a VPC. While the Transit Gateway peering attachment enables routing between transit gateways. A Transit Gateway peering connection attachment is required when routing traffic across multiple regions using transit gateway.
+
+CONFIGURE A TRANSIT GATEWAY VPC ATTACHMENT IN  EACH VPC
+
+Transit Gateway Attachments->name->Transit Gateway ID->Attachment type: VPC->VPC ID:->Subnet IDs: Choose avialbel subnets->create.
+Transit Gateway Peering Attachment is required when routing traffic across multiple regions using AWS Transit Gateway.
+
+CONFIGURE A TRANSIT GATEWAY PEERING ATTACHMENT IN both REGION
+
+to connection between two transit getway we need to establish peering
+
+Create transit gateway attachment->name->Transit Gateway ID->Attachment type: Peering Connection->Account: My account->Region->chose another region->Transit gateway (accepter):Paste the ID for another Transit Gateway.
+
+Task 8: Configure network traffic routing across AWS Transit Gateway connection
+
+When you attach a VPC to a Transit Gateway, a route entry must be added in the VPC route table for traffic to route through the Transit Gateway.
+
+In addition, when you peer Transit Gateways, a static route entry must be added in the Transit Gateway route table to enable traffic to route between the peers.
+
+Hence in this lab, configure both the VPC and Transit Gateway Route tables.
+
+CONFIGURE ROUTE TABLES IN  EACh VPC as we did earlyer
+
+CONFIGURE TRANSIT GATEWAY ROUTE TABLES IN OHIO REGION
+
+
+
+
+
 
 
 
