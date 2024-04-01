@@ -255,15 +255,43 @@ Create transit gateway attachment->name->Transit Gateway ID->Attachment type: Pe
 
 Task 8: Configure network traffic routing across AWS Transit Gateway connection
 
+CONFIGURE ROUTE TABLES IN  EACh VPC as we did earlyer
+
+on each vpc->route table->select rout table->route->in destination ->ip->select transit getway->chose transit attachment->save 
+
 When you attach a VPC to a Transit Gateway, a route entry must be added in the VPC route table for traffic to route through the Transit Gateway.
 
 In addition, when you peer Transit Gateways, a static route entry must be added in the Transit Gateway route table to enable traffic to route between the peers.
 
 Hence in this lab, configure both the VPC and Transit Gateway Route tables.
 
-CONFIGURE ROUTE TABLES IN  EACh VPC as we did earlyer
-
 CONFIGURE TRANSIT GATEWAY ROUTE TABLES IN OHIO REGION
+
+create route table for each attachment,Transit gateway route tables->name->Transit Gateway ID->create.
+
+You have completed setting up both the VPC and transit gateway route tables. There are 3 transit gateway route tables in Oregon region and 2 transit gateway route tables in Ohio region.
+
+CONFIGURE TRANSIT GATEWAY ASSOCIATIONS AND ROUTE PROPAGATION IN all REGION
+
+VPC service->choose Route tables->select ->Associations->Create association->Create association
+
+choose Propagations-> Create propagation->attachment to propagate->create.
+
+Routes->Create static route->CIDR->Active->Choose attachment->Create static route.
+
+Task 9: Test network connectivity across AWS Transit Gateway connection
+
+Test connectivity ->ping < vpc2publicInstanceIP >
+
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/433bfacc-3210-4c3e-9a9c-3a23f410e22d)
+
+# Deploying Amazon VPC for a 3-tier Web App
+
+Tools are available on the internet to help you calculate and create IPv4 subnet CIDR blocks; for example, IPv4 Address Planner.
+
+1.create vpc and 2 publick subnet and 4 private subnets,Creating an Internet gateway,Creating a NAT gateway.Configuring route tables->CONFIGURE PUBLIC ROUTE TABLE->CONFIGURE PRIVATE ROUTE TABLE,Creating security groups(security group for the EC2 instances. Only the ALBSecurityGroup will be allowed to talk to the EC2 instances,you will create an RDSSecurityGroup so the EC2 instances can communicate to the RDS instances,EC2 instances to communicate with the RDS instances on port 3306),Launch web app instances and database resources, and deploy the application->CREATE THE DATABASE IN THE PRIVATE SUBNETS->CREATE AN APPLICATION LOAD BALANCER
+
+
 
 
 
