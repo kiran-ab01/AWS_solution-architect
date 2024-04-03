@@ -292,6 +292,16 @@ Tools are available on the internet to help you calculate and create IPv4 subnet
 1.create vpc and 2 publick subnet and 4 private subnets,Creating an Internet gateway,Creating a NAT gateway.Configuring route tables->CONFIGURE PUBLIC ROUTE TABLE->CONFIGURE PRIVATE ROUTE TABLE,Creating security groups(security group for the EC2 instances. Only the ALBSecurityGroup will be allowed to talk to the EC2 instances,you will create an RDSSecurityGroup so the EC2 instances can communicate to the RDS instances,EC2 instances to communicate with the RDS instances on port 3306),Launch web app instances and database resources, and deploy the application->CREATE THE DATABASE IN THE PRIVATE SUBNETS->CREATE AN APPLICATION LOAD BALANCER
 
 
+# CloudFormation
+CloudFormation->Create stack ->With new resources (standard)->Prerequisite - Prepare template ->Template is ready->Specify template ->Upload a template file(ymal file)->next->Stack name ->Next->specify Tags, Permissions, Stack failure options, and Advanced options->Stack failure options->Preserve successfully provisioned resources.
+
+In cloudformation if i delete stack it will atoumatically delete resource a that is created.to avoide we need add DeletionPolicy: Retain in ymal file
+
+AWS CloudFormation, you can change the properties of an existing resource in the stack.
+
+# AWS Lambda Foundations
+
+
 
 
 
