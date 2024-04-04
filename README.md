@@ -300,11 +300,75 @@ In cloudformation if i delete stack it will atoumatically delete resource a that
 AWS CloudFormation, you can change the properties of an existing resource in the stack.
 
 # AWS Lambda Foundations
+Serverless
 
+AWS Lambda is a compute service. You can use it to run code without provisioning or managing servers. Lambda runs your code on a high-availability compute infrastructure.
 
+**AWS serverless platform**
 
+1.aws lambda edge, 2.aws step function, 3.amazon s3 4.amazon dynamodb, 5.amazon eventbridge, 6.amazon sns, 7.amazon api getway, 8.aws cloud developemnt kit.
 
+Lambda function?
 
+the code we run on aws lambda is called lambda function.
+
+Lambda functions need two permisstions to run,
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/bc2ca5c2-4e09-4fd7-b360-93ec2acd93f3)
+
+Cloud9->open
+
+Verify that necessary packages are installed->aws --version && sam --version && docker --version && node --version && npm --version
+
+command to initialize a new SAM application->
+
+Choice: AWS Quick Start Templates
+
+Package type: Hello World Example
+
+Use the most popular runtime and package type?: No
+
+Which runtime would you like to use?: nodejs18.x
+
+What package type would you like to use?: Image
+
+Would you like to enable X-Ray tracing on the function(s) in your application? [y/N]: N
+
+Would you like to enable monitoring using CloudWatch Application Insights? [y/N]: N
+
+Project name: getletter
+
+A new directory named getletter will appear and AWS SAM templates are an extension of AWS CloudFormation templates, two values that are required when working with container images:
+
+PackageType: Image tells AWS SAM that this function is using container images for packaging.
+
+Metadata helps AWS SAM manage the container images.
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/1120763d-e0f7-4b27-b9b1-c8871fa3c275)
+Build the Dockerfile into a Docker container image by running ->docker build -t getletter .
+
+List the Docker images available by running->docker images
+
+Since the Docker image has been built, we can now run a new Docker container from the image->docker run -p 9000:8080 getletter:latest
+
+test invocation->curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}'
+
+command to navigate to getletter directory and build your container image ->sam build
+
+you’ve built your conainer image using AWS SAM and tested your function locally running on a container, let’s get it ready to deploy to a Lambda function which can be invoked using the Lambda service. First we’ll create a repository to host a copy of our local container image so Lambda can refer to that copy
+# Deploying and Testing Your App
+CREATING YOUR ECR REPOSITORY AND PUSHING YOUR IMAGE
+
+Create an Amazon Elastic Container Registry (ECR)->aws ecr create-repository \
+    --repository-name getletter \
+    --image-scanning-configuration scanOnPush=true
+    
+to login to docker : aws ecr get-login-password \
+    | docker login \
+    --username AWS \
+    --password-stdin <repositoryUri>
+
+push the local image into the registry->docker push <repositoryUri>:latest
+
+USING SAM TO UPLOAD YOUR ECR IMAGE AND DEPLOY YOUR LAMBDA FUNCTION
 
 
 
