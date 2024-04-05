@@ -372,10 +372,53 @@ USING SAM TO UPLOAD YOUR ECR IMAGE AND DEPLOY YOUR LAMBDA FUNCTION
 
 
 
+# Migrating to server less
 
+three migration patterns that you might follow to migrate your legacy applications to a serverless model
 
+1.Leapfrog
 
+As the name suggests, with the leapfrog pattern, you bypass interim steps and go straight from an on-premises legacy architecture to a serverless cloud architecture.
 
+2.organic
 
+With the organic pattern, you move on-premises applications to the cloud in more of a lift-and-shift model. In this model, existing applications are kept intact, either running on Amazon Elastic Compute Cloud (Amazon EC2) instances or with some limited rewrites to container services such as Amazon Elastic Kubernetes Service (Amazon EKS), Amazon Elastic Container Service (Amazon ECS), or AWS Fargate.
+
+3.strangler 
+
+With the strangler pattern, an organization incrementally and systematically decomposes monolithic applications by creating APIs and building event-driven components that gradually replace components of the legacy application.New feature branches can be serverless first, and legacy components can be decommissioned as they are replaced. This pattern represents a more systematic approach to adopting serverless, allowing you to move to critical improvements where you see benefit quickly but with less risk and upheaval than the leapfrog pattern.
+
+# Migration considerations
+the most common for moving complex applications is the strangler pattern, where you refactor and rewrite parts of your application with serverless. 
+
+What does this application do and how are its components organized?
+
+how can you break up your data based on the command query responsibility segregation, or CQRS, pattern? What belongs on the control plane and what belongs on the data plane?
+
+How does the application scale and what components drive the capacity you need?
+
+Do you have schedule-based tasks?
+
+Do you have workers listening to a queue? This may be an easy place to introduce an Amazon Simple Queue Service (Amazon SQS) queue without requiring a lot of untangling of the existing code.
+
+Where can you refactor or enhance functionality without impacting the current implementation?
+
+You can use both Application Load Balancer and API Gateway to direct traffic to different targets to easily incorporate new components without disrupting the existing system.
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/01b17928-e788-4849-b16a-74fff0f780e0)
+three factors when comparing costs of ownership:
+
+The infrastructure cost to run your workload. For example, the costs for your provisioned EC2 capacity compared to the per-invocation cost of your Lambda functions.
+
+The development effort to plan, architect, and provision resources on which the application will run.
+
+The costs of your team’s time to maintain the application once it is in production.
+
+# AWS Fargate is another serverless compute option
+Fargate is a managed service, purpose built as a compute engine for containers. With Fargate, you don’t need to manage the underlying EC2 clusters for your hosted containers.
+
+Considerations for choosing Fargate or Lambda for serverless compute
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/f03f7904-5962-4309-b12b-55c224eed9d3)
+
+![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/6a4fa1a9-72eb-4fb9-bb36-b4620e1ebdf2)
 
 
