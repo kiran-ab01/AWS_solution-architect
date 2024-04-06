@@ -421,4 +421,14 @@ Considerations for choosing Fargate or Lambda for serverless compute
 
 ![image](https://github.com/kiran-ab01/AWS_solution-architect/assets/132429361/6a4fa1a9-72eb-4fb9-bb36-b4620e1ebdf2)
 
+# scale your serverless architecture
+Separate your application and database.
+
+Take advantage of the AWS Global Cloud Infrastructure.
+
+Identify and avoid heavy lifting.
+
+Monitor for percentile.
+
+Refactor as you go.
 
