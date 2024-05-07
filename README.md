@@ -432,3 +432,40 @@ Monitor for percentile.
 
 Refactor as you go.
 
+
+
+# Lift and Shift an Application to Serverless on AWS
+
+Task 1: Creating your Aurora Serverless Cluster
+
+In this task, you deploy a serverless Aurora cluster. You use this cluster to migrate the existing MySQL database in the Amazon EC2 environment to an Aurora Serverless Cluster.
+
+Task 2: Connecting to your environment
+
+Command: Once connected, copy and paste the following commands to install the serverless framework.
+run in ec2 instance
+
+# Install NVM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+# Install Node
+. ~/.nvm/nvm.sh
+nvm install 16
+# Install Serverless Framework
+npm install -g serverless@2
+
+You have successfully accessed your EC2 environment, installed NVM, Node and the Serverless Framework required for the subsequent tasks in this lab.
+
+Task 3: Migrating our existing database to Aurora Serverless
+
+you begin the process of migrating the MySQL environment to the newly created Amazon Aurora Serverless Cluster. You complete the migration by exporting the current database to a file and importing the database (from a file) to your Aurora Serverless Cluster.
+
+Stop the web server to prevent additional requests. This step ensures data integrity during the migration as the website is unable to fulfill new requests while the service is down.
+
+Command:sudo service httpd stop
+
+Note: Once the web server has stopped, you can begin the migration.
+
+Command: Use the following command to take a backup of the current database by creating a database dump and exporting the dump to a file.
+
+
+
